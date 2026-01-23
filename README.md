@@ -1,260 +1,169 @@
-# Inerta - Laravel Modular Monolith Starter Kit
+# Laravel Modular Admin Panel (Velzon Template)
 
-A production-ready Laravel 12 modular monolith starter kit with Vue.js 3, Inertia.js, and Pathify.
+Laravel 12 modular monolith admin panel with Inertia.js + Vue.js 3, using **Module-ID Based Permission System**.
 
 ## Tech Stack
 
-- **Backend**: Laravel 12, PHP 8.2+
-- **Frontend**: Vue.js 3 (Composition API), Inertia.js
-- **CSS**: Bootstrap 5 SCSS (Velzon Material Theme)
-- **Module System**: nwidart/laravel-modules
-- **Route Helper**: Pathify (Ziggy alternative)
+| Layer | Technology |
+|-------|------------|
+| Backend | Laravel 12, PHP 8.2+ |
+| Frontend | Vue.js 3 (Composition API), Inertia.js |
+| Styling | Tailwind CSS 4 |
+| Module System | nwidart/laravel-modules |
+| State Management | Pinia |
 
-## Features
+## Requirements
 
-- **Modular Architecture**: Organized into self-contained modules
-- **Authentication**: Complete auth system with session-based login
-- **Role & Permission Management**: Flexible RBAC with module-level permissions
-- **User Management**: Full CRUD with role assignment
-- **Module Management**: Dynamic module registration and configuration
-- **Global Components**: Pre-registered Vue components with `c-` prefix
-- **Responsive Design**: Mobile-friendly Bootstrap 5 layout
-
-## Directory Structure
-
-```
-├── app/
-│   ├── Helpers/          # Global helper functions
-│   ├── Http/
-│   │   ├── Controllers/  # Base controller
-│   │   └── Middleware/   # Custom middleware
-│   ├── Models/           # Eloquent models
-│   └── Services/         # Business logic services
-├── config/
-│   ├── modules.php       # nwidart/laravel-modules config
-│   └── pathify.php       # Pathify route helper config
-├── modules/
-│   ├── Auth/             # Authentication module
-│   ├── Dashboard/        # Dashboard module
-│   ├── UserManagement/   # User CRUD module
-│   ├── RolePermission/   # Role & permission module
-│   └── ModuleManagement/ # Module management
-├── resources/
-│   ├── js/
-│   │   ├── Components/   # Vue components
-│   │   ├── Composables/  # Vue composables
-│   │   ├── Helpers/      # JS helpers
-│   │   ├── Layouts/      # App layouts
-│   │   └── app.js        # Vue app entry
-│   └── scss/             # Bootstrap SCSS
-├── stubs/
-│   └── nwidart-stubs/    # Module generator stubs
-└── vendor/
-    └── herolabid/pathify # Pathify package
-```
+- PHP 8.2+
+- Node.js 20+
+- Composer 2.x
+- MySQL 8.0+ / PostgreSQL 15+
 
 ## Installation
 
-### 1. Clone Repository
-
 ```bash
-git clone git@github.com:IrfanArsyad/inerta.git
-cd inerta
-```
+# Clone repository
+git clone <repository-url>
+cd vue-velzon
 
-### 2. Install Dependencies
-
-```bash
+# Install dependencies
 composer install
 npm install
-```
 
-### 3. Environment Setup
-
-```bash
+# Environment setup
 cp .env.example .env
 php artisan key:generate
-```
 
-### 4. Database Setup
-
-```bash
+# Database setup
 php artisan migrate
 php artisan db:seed
-```
 
-### 5. Generate Pathify Routes
-
-```bash
-php artisan pathify:generate
-```
-
-### 6. Build Assets
-
-```bash
+# Build assets
 npm run build
-# or for development
-npm run dev
 ```
 
-### 7. Start Server
+## Development
 
 ```bash
-php artisan serve
+# Run all services concurrently (recommended)
+composer dev
+
+# Or run separately
+php artisan serve    # Laravel server
+npm run dev          # Vite dev server
 ```
 
-## Default Credentials
-
-- **Email**: admin@example.com
-- **Password**: password
-
-## Module System
-
-### Creating New Module
-
-```bash
-php artisan module:make ModuleName
-```
-
-This uses custom stubs from `stubs/nwidart-stubs/` that include:
-- Repository pattern
-- Service layer
-- Form requests
-- Vue views with modal CRUD
-
-### Module Structure
+## Project Structure
 
 ```
-modules/ModuleName/
-├── app/
-│   ├── Http/
-│   │   ├── Controllers/
-│   │   ├── Requests/
-│   │   └── Resources/
-│   ├── Repositories/
-│   │   └── Contracts/
-│   ├── Services/
-│   └── Providers/
-├── config/
-├── database/
-│   └── seeders/
-├── resources/
-│   └── views/           # Vue components
-├── routes/
-│   └── web.php
-└── module.json
+vue-velzon/
+├── app/                         # Core Laravel app
+│   ├── Helpers/                 # Global helpers
+│   ├── Http/Middleware/         # Auth & permission middleware
+│   ├── Models/                  # Core models (User, Role, Module)
+│   ├── Services/                # Core services (AuthService)
+│   └── Traits/                  # Reusable traits (HasRoles)
+├── resources/js/                # Shared Vue components (alias: @)
+│   ├── Layouts/                 # AppLayout.vue, GuestLayout.vue
+│   ├── Components/              # Shared UI components
+│   ├── Composables/             # usePermission.js, useFlash.js
+│   └── Helpers/                 # formatters.js
+├── modules/                     # Feature modules (lowercase)
+│   ├── Auth/                    # Authentication module
+│   │   └── resources/views/     # login.vue (lowercase)
+│   ├── Dashboard/               # Dashboard module
+│   │   └── resources/views/     # index.vue
+│   ├── UserManagement/          # User Management (Module ID: 1)
+│   │   ├── app/
+│   │   │   ├── Http/
+│   │   │   │   ├── Controllers/
+│   │   │   │   ├── Requests/
+│   │   │   │   └── Resources/
+│   │   │   ├── Repositories/
+│   │   │   └── Services/
+│   │   └── resources/
+│   │       ├── views/           # index.vue, create.vue, edit.vue, show.vue
+│   │       ├── components/      # UserForm.vue, UserTable.vue
+│   │       └── composable/      # useUser.js
+│   └── RolePermission/          # Role & Permission (Module ID: 2)
+│       └── ...                  # Same structure as UserManagement
+├── themes/material/             # UI template reference
+├── ARCHITECTURE.md              # Full architecture documentation
+├── DATABASE.md                  # Database schema & ERD
+├── STUBS.md                     # Module stub templates
+├── TASKS.md                     # Implementation task list
+└── CLAUDE.md                    # Claude Code instructions
 ```
 
 ## Permission System
 
-Permissions are stored in roles as JSON arrays:
+Permissions are stored as JSON with module IDs:
 
 ```php
+// Role permissions
 [
-    'read' => [1, 2, 3],    // Module IDs with read access
-    'create' => [1],        // Module IDs with create access
-    'update' => [1],        // Module IDs with update access
-    'delete' => [],         // Module IDs with delete access
+    'read'   => ['*'],        // ['*'] = full access, [1,2,3] = specific modules
+    'create' => [1, 2],       // Module IDs that can create
+    'update' => [1],          // Module IDs that can update
+    'delete' => [],           // Empty = no delete access
 ]
 ```
 
-Use `['*']` for full access to all modules.
+### Module IDs
 
-### Middleware Usage
+| ID | Module |
+|----|--------|
+| 1 | User Management |
+| 2 | Role & Permission |
+| 3 | Dashboard |
 
-```php
-// Read access only
-Route::middleware(['auth', 'module.access:1']);
+### Permission Flow
 
-// Specific permission
-Route::middleware(['auth', 'module.permission:1,create']);
-```
+1. **Login** - `AuthService::loadUserSession()` merges all role permissions → stored in session
+2. **Sidebar** - Only shows modules where user has `read` permission
+3. **Middleware** - `module.access:1` checks read, `module.permission:1,create` checks specific action
+4. **UI** - `v-if="canCreate"` conditionally shows buttons
 
-### Helper Functions
-
-```php
-can_read($moduleId)
-can_create($moduleId)
-can_update($moduleId)
-can_delete($moduleId)
-can_access($action, $moduleId)
-```
-
-## Pathify (Route Helper)
-
-### Configuration
-
-Pathify is initialized in `resources/js/app.js`:
-
-```javascript
-import { PathifyVue, setConfig } from '../../vendor/herolabid/pathify/resources/js/vue'
-import PathifyConfig from './pathify.js'
-
-// In setup
-setConfig(PathifyConfig)
-app.use(PathifyVue)
-```
-
-### Usage in Vue
-
-```vue
-<template>
-  <a :href="route('users.index')">Users</a>
-</template>
-
-<script setup>
-// route() is available globally in templates
-// For script, use explicit URL or router
-</script>
-```
-
-### Regenerate Routes
+## Commands Reference
 
 ```bash
-php artisan pathify:generate
+# Development
+php artisan serve              # Run Laravel server
+npm run dev                    # Run Vite dev server
+composer dev                   # Run all services concurrently
+
+# Testing & Quality
+php artisan test               # Run tests
+./vendor/bin/pint              # Format PHP code (PSR-12)
+
+# Database
+php artisan migrate            # Run migrations
+php artisan db:seed            # Run seeders
+php artisan migrate:fresh --seed  # Reset and seed database
+
+# Module Management
+php artisan module:make ModuleName           # Create new module
+php artisan module:migrate ModuleName        # Run module migrations
 ```
 
-## Global Components
+## Documentation
 
-Registered in `app.js` with `c-` prefix:
+| File | Description |
+|------|-------------|
+| [ARCHITECTURE.md](./ARCHITECTURE.md) | Full architecture design, code patterns, security layers |
+| [DATABASE.md](./DATABASE.md) | Database schema, migrations, ERD, permission system |
+| [STUBS.md](./STUBS.md) | Module stub templates for generating new modules |
+| [TASKS.md](./TASKS.md) | Implementation task list (103+ tasks) |
+| [CLAUDE.md](./CLAUDE.md) | Claude Code instructions for AI assistance |
 
-| Component | Usage |
-|-----------|-------|
-| c-link | Inertia Link |
-| c-page-header | Page header with breadcrumbs |
-| c-data-table | Data table with pagination |
-| c-table-filters | Search and filter bar |
-| c-confirm-dialog | Delete confirmation |
-| c-flash-message | Toast notifications |
-| c-input | Form input |
-| c-select | Form select |
-| c-checkbox | Form checkbox/switch |
-| c-button | Form button with loading |
-| c-textarea | Form textarea |
+## Default Credentials
 
-## Composables
-
-### usePermission
-
-```javascript
-import { usePermission } from '@/Composables/usePermission'
-
-const { canCreate, canUpdate, canDelete } = usePermission(moduleId)
 ```
-
-### useConfirm
-
-```javascript
-import { useConfirm } from '@/Composables/useConfirm'
-
-const { confirmDelete } = useConfirm()
-const confirmed = await confirmDelete('Delete this item?')
+Email: admin@example.com
+Password: password
+Role: Super Admin (full access)
 ```
 
 ## License
 
 MIT License
-
-## Author
-
-Irfan Arsyad
