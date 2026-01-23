@@ -1,0 +1,12 @@
+{
+    "name": "ModuleManagement",
+    "alias": "modulemanagement",
+    "description": "Module for managing application modules",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\ModuleManagement\\Providers\\ModuleManagementServiceProvider"
+    ],
+    "files": [],
+    "requires": []
+}
