@@ -16,7 +16,13 @@
 /public/build
 /public/hot
 /public/storage
+/bootstrap/cache/*
+!/bootstrap/cache/.gitignore
 /storage/*.key
+/storage/framework/views/*
+!/storage/framework/views/.gitignore
+/storage/logs/*
+!/storage/logs/.gitignore
 /storage/pail
 /vendor
 Homestead.json
@@ -24,3 +30,9 @@ Homestead.yaml
 Thumbs.db
 resources/js/pathify.d.ts
 resources/js/pathify.js
+
+**/caddy
+frankenphp
+frankenphp-worker.php
+rr
+.rr.yaml
