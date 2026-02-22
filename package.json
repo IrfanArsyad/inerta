@@ -27,6 +27,7 @@
         "remixicon": "^4.8.0",
         "simplebar": "^6.3.3",
         "simplebar-vue": "^2.4.2",
-        "vue": "^3.5.27"
+        "vue": "^3.5.27",
+        "ziggy-js": "^2.6.1"
     }
 }

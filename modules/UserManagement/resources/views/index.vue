@@ -1,6 +1,7 @@
 <script setup>
 import { ref, watch, computed } from 'vue'
 import { Head, router, useForm } from '@inertiajs/vue3'
+import { route } from 'ziggy-js'
 import { debounce } from 'lodash-es'
 import AppLayout from '@/Layouts/AppLayout.vue'
 import Modal from '@/Components/Modal.vue'

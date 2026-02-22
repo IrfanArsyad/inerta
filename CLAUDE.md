@@ -12,6 +12,7 @@ Laravel 12 modular monolith with Inertia.js + Vue.js 3, using **Module-ID Based 
 - Styling: Tailwind CSS 4
 - Module System: nwidart/laravel-modules
 - State Management: Pinia
+- Route Helper: tightenco/ziggy + ziggy-js
 
 ## Essential Reference Files
 
@@ -110,6 +111,7 @@ Permissions are stored as JSON with module IDs:
 - Use `usePermission()` composable for permission checks
 - Import layouts from `@/Layouts/`
 - Import shared components from `@/Components/`
+- Route helper: `route()` available in `<template>` via globalProperties. In `<script setup>`, add `import { route } from 'ziggy-js'`
 
 ### Module Creation Checklist
 

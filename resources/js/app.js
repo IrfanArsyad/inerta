@@ -4,8 +4,7 @@ import { createApp, h } from 'vue'
 import { createInertiaApp, Link } from '@inertiajs/vue3'
 import { createPinia } from 'pinia'
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers'
-import { PathifyVue, setConfig } from '../../vendor/herolabid/pathify/resources/js/vue'
-import PathifyConfig from './pathify.js'
+import { route } from 'ziggy-js'
 import { createBootstrap } from 'bootstrap-vue-next'
 
 // Import Bootstrap JS bundle for dropdowns, collapse, tooltips, etc.
@@ -70,14 +69,13 @@ createInertiaApp({
         const pinia = createPinia()
         const bootstrapPlugin = createBootstrap()
 
-        // Initialize Pathify with generated config
-        setConfig(PathifyConfig)
-
         const app = createApp({ render: () => h(App, props) })
             .use(plugin)
             .use(pinia)
             .use(bootstrapPlugin)
-            .use(PathifyVue)
+
+        // Register route() as global property for template usage
+        app.config.globalProperties.route = route
 
         // Register Global Components with 'c-' prefix
         app.component('c-link', Link)

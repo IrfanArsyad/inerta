@@ -1,6 +1,7 @@
 <script setup>
 import { computed, onMounted } from 'vue'
 import { usePage, Link, router } from '@inertiajs/vue3'
+import { route } from 'ziggy-js'
 import simplebar from 'simplebar-vue'
 import 'simplebar-vue/dist/simplebar.min.css'
 

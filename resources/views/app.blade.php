@@ -7,7 +7,7 @@
     <title inertia>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    @pathify
+    @routes
     @vite(['resources/scss/config/material/app.scss', 'resources/js/app.js'])
     @inertiaHead
 </head>

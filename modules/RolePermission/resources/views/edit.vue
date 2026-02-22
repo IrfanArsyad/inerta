@@ -1,5 +1,6 @@
 <script setup>
 import { Head, useForm } from '@inertiajs/vue3'
+import { route } from 'ziggy-js'
 import AppLayout from '@/Layouts/AppLayout.vue'
 
 const props = defineProps({
